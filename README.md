@@ -65,57 +65,57 @@ Use the following guidelines to set up your models and API routes:
 ### Models
 
 **User**:
-
+<!-- 
 * `username`
   * String
   * Unique
   * Required
-  * Trimmed
-
+  * Trimmed -->
+<!-- 
 * `email`
   * String
   * Required
   * Unique
-  * Must match a valid email address (look into Mongoose's matching validation)
+  * Must match a valid email address (look into Mongoose's matching validation) -->
 
-* `thoughts`
+<!-- * `thoughts`
   * Array of `_id` values referencing the `Thought` model
 
 * `friends`
-  * Array of `_id` values referencing the `User` model (self-reference)
+  * Array of `_id` values referencing the `User` model (self-reference) -->
 
-**Schema Settings**:
+<!-- **Schema Settings**:
 
-Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
+Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query. -->
 
 ---
 
 **Thought**:
-
+<!-- 
 * `thoughtText`
   * String
   * Required
-  * Must be between 1 and 280 characters
+  * Must be between 1 and 280 characters -->
 
-* `createdAt`
+<!-- * `createdAt`
   * Date
   * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
+  * Use a getter method to format the timestamp on query -->
 
-* `username` (The user that created this thought)
+<!-- * `username` (The user that created this thought)
   * String
-  * Required
+  * Required -->
 
-* `reactions` (These are like replies)
-  * Array of nested documents created with the `reactionSchema`
+<!-- * `reactions` (These are like replies)
+  * Array of nested documents created with the `reactionSchema` -->
 
-**Schema Settings**:
+<!-- **Schema Settings**:
 
-Create a virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field on query.
+Create a virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field on query. -->
 
 ---
 
-**Reaction** (SCHEMA ONLY)
+<!-- **Reaction** (SCHEMA ONLY)
 
 * `reactionId`
   * Use Mongoose's ObjectId data type
@@ -133,11 +133,11 @@ Create a virtual called `reactionCount` that retrieves the length of the thought
 * `createdAt`
   * Date
   * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
+  * Use a getter method to format the timestamp on query -->
 
-**Schema Settings**:
+<!-- **Schema Settings**:
 
-This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
+This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model. -->
 
 ### API Routes
 
