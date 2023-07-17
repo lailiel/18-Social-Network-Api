@@ -40,7 +40,7 @@ module.exports = {
       },
     // Post new user
     // this probably needs some work
-    async createUSer(req, res) {
+    async createUser(req, res) {
         try {
           const user = await User.create(req.body);
           const thoughts = await Thought.find(
