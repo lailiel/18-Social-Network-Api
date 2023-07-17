@@ -18,6 +18,7 @@ module.exports = {
       },
 
     // Get user by _id
+    // check 'userId
     async getSingleUser(req, res) {
         try {
           const user = await User.findOne({ _id: req.params.userId })

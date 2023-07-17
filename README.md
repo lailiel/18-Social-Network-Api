@@ -163,7 +163,7 @@ This will not be a model, but rather will be used as the `reaction` field's subd
 
 **BONUS**: Remove a user's associated thoughts when deleted.
 
----
+<!-- --- -->
 
 **`/api/users/:userId/friends/:friendId`**
 
@@ -171,7 +171,7 @@ This will not be a model, but rather will be used as the `reaction` field's subd
 
 * `DELETE` to remove a friend from a user's friend list
 
----
+<!-- --- -->
 
 **`/api/thoughts`**
 
@@ -194,7 +194,7 @@ This will not be a model, but rather will be used as the `reaction` field's subd
 
 * `DELETE` to remove a thought by its `_id`
 
----
+<!-- --- -->
 
 **`/api/thoughts/:thoughtId/reactions`**
 
