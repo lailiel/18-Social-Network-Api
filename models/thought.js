@@ -1,10 +1,10 @@
+const { ObjectId } = require("bson");
 const { Schema, model } = require("mongoose");
 
 const reactionSchema = new mongoose.Schema({
   reactionID: {
     type: Schema.Types.ObjectId,
-    // finish this - value set to a new ObjectId
-    default: "",
+    default: new ObjectId,
   },
   reactionBody: {
     type: String,
@@ -16,12 +16,9 @@ const reactionSchema = new mongoose.Schema({
     required: true,
   },
   createdAt: {
-    // finish this
-    Date: "",
-    // finish this value of current timestamp
-    default: "",
-    // finish this format the timestamp on query
-    getter: "",
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dayjs().get('DD / MM / yyyy'),
   },
 });
 
@@ -33,20 +30,24 @@ const thoughtSchema = new mongoose.Schema({
     max_length: 280,
   },
   createdAt: {
-    // finish this
-    Date: "",
-    // finish this value of current timestamp
-    default: "",
-    // finish this format the timestamp on query
-    getter: "",
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dayjs().get('DD / MM / yyyy'),
   },
   username: {
-    // of the user that created this thought
     type: String,
     required: true,
   },
   reactions: [reactionSchema],
-});
+},
+{
+    toJson: {
+        getters: true,
+        virtuals: true,
+    },
+    id: true,
+    }
+);
 
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;

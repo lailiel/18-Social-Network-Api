@@ -33,6 +33,12 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
+  {
+    toJson: {
+        virtuals: true,
+    },
+    id: false,
+    }
 );
 
 userSchema.virtual("friendCount").get(function () {
