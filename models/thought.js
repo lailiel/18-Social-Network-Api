@@ -19,7 +19,7 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (timestamp) => dayjs(timestamp).get("DD / MM / yyyy , hh:mm"),
+      get: timestamp => dayjs(timestamp).format("DD / MM / yyyy , hh:mm"),
     },
   },
   {
@@ -42,7 +42,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (timestamp) => dayjs(timestamp).get("DD / MM / yyyy , hh:mm"),
+      get: timestamp => dayjs(timestamp).format("DD/MM/YYYY"),
     },
     username: {
       type: String,
@@ -63,6 +63,6 @@ thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-const Thought = model("thought", thoughtSchema);
+const Thought = model("Thought", thoughtSchema);
 
 module.exports = Thought;
