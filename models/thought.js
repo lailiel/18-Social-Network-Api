@@ -1,52 +1,62 @@
-const { ObjectId } = require("bson");
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
+const dayjs = require("dayjs");
 
-const reactionSchema = new mongoose.Schema({
-  reactionID: {
-    type: Schema.Types.ObjectId,
-    default: new ObjectId,
+const reactionSchema = new Schema(
+  {
+    reactionID: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      max_length: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dayjs(timestamp).get("DD / MM / yyyy , hh:mm"),
+    },
   },
-  reactionBody: {
-    type: String,
-    required: true,
-    max_length: 280,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dayjs().get('DD / MM / yyyy'),
-  },
-});
+  {
+    toJSON: {
+      virtuals: true,
+      getters: true,
+    },
+    id: false,
+  }
+);
 
-const thoughtSchema = new mongoose.Schema({
-  thoughtText: {
-    type: String,
-    required: true,
-    min_length: 1,
-    max_length: 280,
+const thoughtSchema = new Schema(
+  {
+    thoughtText: {
+      type: String,
+      required: true,
+      min_length: 1,
+      max_length: 280,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dayjs(timestamp).get("DD / MM / yyyy , hh:mm"),
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    reactions: [reactionSchema],
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dayjs().get('DD / MM / yyyy'),
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  reactions: [reactionSchema],
-},
-{
+  {
     toJson: {
-        getters: true,
-        virtuals: true,
+      getters: true,
+      virtuals: true,
     },
     id: true,
-    }
+  }
 );
 
 thoughtSchema.virtual("reactionCount").get(function () {
