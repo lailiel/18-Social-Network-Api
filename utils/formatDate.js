@@ -5,4 +5,5 @@ function formatDate(timestamp) {
     return formatTimeStamp;
 }
 
-module.exports = formatDate
+
+module.exports =  formatDate
