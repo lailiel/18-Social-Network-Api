@@ -87,5 +87,37 @@ module.exports = {
         }
       },
 
+      async addFriend ({params, body}, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: {friends: body} },
+                { runValidators: true, new: true }
+            );
+            if (!user) {
+                res.status(404).json({ message: "No user found" });
+              }
+              res.json(user);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+        },
+    
+      async deleteFriend ({params, body}, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: {friends: { friendId: params.friendId}} },
+                { new: true }
+            );
+            if (!user) {
+                res.status(404).json({ message: "No friend found" });
+              }
+              res.json(reaction);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+        },
+
 
 }
