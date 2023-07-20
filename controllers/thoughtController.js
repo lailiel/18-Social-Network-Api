@@ -1,11 +1,11 @@
 const { ObjectId } = require("mongoose").Types;
-const { User, Thought } = require("../models");
+const { User, Thought, Reaction } = require("../models");
 
 module.exports = {
   // Get all thoughts
   async getThought(req, res) {
     try {
-      const thoughts = await Thought.find();
+      const thoughts = await Thought.find().populate('reactions');
       const thoughtObj = {
         thoughts,
       };
@@ -19,7 +19,7 @@ module.exports = {
   // check 'thoughtId'
   async getSingleThought(req, res) {
     try {
-      const thought = await Thought.findOne({ _id: req.params.thoughtId })
+      const thought = await Thought.findOne({ _id: req.params.thoughtId }).populate('reactions')
         .select("-__v");
 
       if (!thought) {
@@ -90,14 +90,17 @@ module.exports = {
     }
   },
 
-  async addReaction ({params, body}, res) {
+  async addReaction (req, res) {
     try {
-        const reaction = await Thought.findOneAndUpdate(
+        const reaction = await Reaction.create(req.body);
+            res.json(reaction);
+
+        const pushReaction = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: {reactions: body} },
-            { runValidators: true, new: true }
+            { $push: {reactions: reaction} },
+            { new: true }
         );
-        if (!reaction) {
+        if (!pushReaction) {
             res.status(404).json({ message: "No reaction found" });
           }
           res.json(reaction);
@@ -106,7 +109,7 @@ module.exports = {
     }
     },
 
-  async deleteReaction ({params, body}, res) {
+  async deleteReaction (req, res) {
     try {
         const reaction = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },

@@ -3,7 +3,7 @@ const formatDate = require('../utils/formatDate')
 
 const reactionSchema = new Schema(
   {
-    reactionID: {
+    reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
@@ -24,7 +24,6 @@ const reactionSchema = new Schema(
   },
   {
     toJSON: {
-      virtuals: true,
       getters: true,
     },
     id: false,
@@ -48,7 +47,10 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [reactionSchema],
+    reactions: [ {
+        type: Schema.Types.ObjectId,
+        ref: "Reaction",
+      },],
   },
   {
     toJson: {
@@ -64,5 +66,6 @@ thoughtSchema.virtual("reactionCount").get(function () {
 });
 
 const Thought = model("Thought", thoughtSchema);
+const Reaction = model("Reaction", reactionSchema);
 
-module.exports = Thought;
+module.exports = Thought, Reaction;
