@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongoose").Types;
-const { User, Thought, Reaction } = require("../models");
+const { User, Thought } = require("../models");
 
 module.exports = {
   // Get all thoughts
@@ -40,11 +40,10 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
-      res.json(thought);
 
       const pushThought = await User.findOneAndUpdate(
         { _id: req.body.userId },
-        { $push: { thoughts: thought._id } },
+        { $push: { thoughts: thought._id} },
         { runValidators: true, new: true }
       );
       res.json(pushThought);
@@ -94,12 +93,10 @@ module.exports = {
 
   async addReaction(req, res) {
     try {
-      const reaction = await Reaction.create(req.body);
-      res.json(reaction);
 
       const pushReaction = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $set: { reactions: reaction } },
+        { $push: { reactions: req.body } },
         { runValidators: true, new: true }
       );
       if (!pushReaction) {
