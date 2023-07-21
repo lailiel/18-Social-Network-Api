@@ -9,7 +9,6 @@ module.exports = {
           const users = await User.find()
           .populate("thoughts")
           .populate("friends")
-        //   .populate("friendCount");
           const userObj = {
             users
           };
@@ -21,7 +20,6 @@ module.exports = {
       },
 
     // Get user by _id
-    // check 'userId
     async getSingleUser(req, res) {
         try {
           const user = await User.findOne({ _id: req.params.userId }).populate("thoughts").populate("friends")
@@ -42,7 +40,6 @@ module.exports = {
         }
       },
     // Post new user
-    // this probably needs some work
     async createUser(req, res) {
         try {
           const user = await User.create(req.body);
@@ -52,7 +49,6 @@ module.exports = {
         }
       },
     // Put update user by id
-    // probably needs work
     async updateUser(req, res) {
         try {
           const user = await User.findOneAndUpdate(

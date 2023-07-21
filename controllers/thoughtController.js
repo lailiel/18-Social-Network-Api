@@ -16,7 +16,6 @@ module.exports = {
     }
   },
   // Get thought by ID
-
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
@@ -36,7 +35,6 @@ module.exports = {
     }
   },
   // Post new Thought
-
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
@@ -74,7 +72,6 @@ module.exports = {
   },
 
   // delete though by ID
-
   async deleteThought(req, res) {
     try {
       const thought = await Thought.findOneAndRemove({
